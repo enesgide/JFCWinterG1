@@ -1,7 +1,7 @@
 import os
 
 
-class dogAuscModel:
+class DogAuscModel:
     def __init__(self):
         self.s1_audio = None
         self.s2_audio = None

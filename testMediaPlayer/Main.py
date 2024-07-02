@@ -16,5 +16,6 @@ class Main:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.resizable(0,0)
     app = Main(root)
     root.mainloop()

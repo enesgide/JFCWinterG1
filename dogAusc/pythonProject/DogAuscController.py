@@ -3,7 +3,7 @@ from tkinter import filedialog
 import tkinter as tk
 import os
 
-class dogAuscController:
+class DogAuscController:
     def __init__(self, model, view):
         self.model = model
         self.view = view
