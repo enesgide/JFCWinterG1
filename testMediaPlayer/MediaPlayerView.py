@@ -10,9 +10,10 @@ class MediaPlayerView:
         self.song_list = None
 
         self.root.title("Media Player")
-        self.root.geometry("1280x720")
+        self.root.geometry("640x360")
 
         self.label = tk.Label(self.root, text="Not currently playing a song.")
+        self.label.pack()
 
     def set_controller(self, controller):
         self.controller = controller
@@ -36,8 +37,11 @@ class MediaPlayerView:
             self.song_list.insert(tk.END, song)
 
     def create_song_list(self):
-        self.song_list = Listbox(self.root, bg="black", fg="white", width=400, height=40)
-        self.song_list.pack()
+        list_frame = Frame(self.root)
+        list_frame.pack(fill=tk.BOTH, expand=True)
+
+        self.song_list = Listbox(list_frame, bg="black", fg="white", width=400, height=10)
+        self.song_list.pack(fill=tk.BOTH, expand=True)
 
     def create_control_buttons(self):
         ctrl_frame = Frame(self.root)
@@ -48,10 +52,10 @@ class MediaPlayerView:
         prev_btn = Button(ctrl_frame, text="Prev", command=self.controller.prev_song)
         next_btn = Button(ctrl_frame, text="Next", command=self.controller.next_song)
 
-        play.grid(row=0, column=0, pady=10)
-        pause.grid(row=0, column=1, pady=10)
-        prev_btn.grid(row=0, column=2, pady=10)
-        next_btn.grid(row=0, column=3, pady=10)
+        play.grid(row=0, column=0, pady=10, padx=5)
+        pause.grid(row=0, column=1, pady=10, padx=5)
+        prev_btn.grid(row=0, column=2, pady=10, padx=5)
+        next_btn.grid(row=0, column=3, pady=10, padx=5)
 
     def get_root(self):
         return self.root
