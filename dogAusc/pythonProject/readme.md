@@ -19,6 +19,8 @@
 
 
 ### 03/07/2024
-* need to fix asynchronous methods
-* be able to update the view to reflect connection status as the connection loop runs
-* looks like 
+* touchup on asynchronous methods
+* tried porting into an EXE, pyinstaller is missing the bleak lib modules
+* idk how fix
+* still need to implement file loading and naming solution
+* exe needs to be signed for security
