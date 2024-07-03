@@ -28,7 +28,7 @@ async def connect_to_arduino():
     print(f"Connecting to {device.name} at {device.address}...")
 
     try:
-        async with BleakClient(device.address, timeout=30.0) as client:
+        async with BleakClient(device.address, timeout=5.0) as client:
             print(f"Connected to {device.name}")
 
             # Write to the characteristic

@@ -4,6 +4,8 @@ import tkinter as tk
 import asyncio
 import os
 
+NOTIFY_CHARACTERISTIC_UUID = "19b10001-e8f2-537e-4f6c-d104768a1216"
+
 class DogAuscController:
     def __init__(self, model, view):
         self.model = model
@@ -32,26 +34,31 @@ class DogAuscController:
         pass
 
     async def startAuscultation(self):
-        self.view.connection_label.config(text="Bluetooth Connection to Model: Pending")
-        self.view.connection_label.config(foreground="yellow")
-        await asyncio.ensure_future(self.model.connect_to_arduino())
-        asyncio.sleep(30)
-        while True:
-            if self.model.connected():
-                self.view.connection_label.config(text="Bluetooth Connection to Model: Connected")
-                self.view.connection_label.config(foreground="green")
-                return
-            else:
-                self.view.connection_label.config(text="Bluetooth Connection to Model: Inactive")
-                self.view.connection_label.config(foreground="red")
-                return
+        self.view.update_status("Pending")
+        connected = await self.model.connect_to_arduino()
+        if connected:
+            def notif_handler(sender, data):
+                print(data.decode().split(','))
+            self.view.update_status("Active")
+            await self.model.start_notifications(NOTIFY_CHARACTERISTIC_UUID, notif_handler)
+
+            while True:
+                await asyncio.sleep(1)
+        else:
+            self.view.update_status("Inactive")
+        await self.model.client_disconnect()
 
 
 
     async def endAuscultation(self):
-        self.model.disconnect()
-        await asyncio.sleep(2)
-        self.view.connection_label.config(text="Bluetooth Connection to Model: Inactive")
-        self.view.connection_label.config(foreground="red")
-        print("auscultation ended")
+        if self.model.client != None:
+            try:
+                await self.model.client.stop_notify(NOTIFY_CHARACTERISTIC_UUID)
+                await self.model.client_disconnect()
+                self.view.update_status("Inactive")
+                print("auscultation ended")
+            except Exception as e:
+                print(f"Disconnection error: {e}")
+            finally:
+                self.model.is_connected = False
 
