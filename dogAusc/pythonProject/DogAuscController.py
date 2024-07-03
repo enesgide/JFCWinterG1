@@ -1,6 +1,7 @@
 import pygame
 from tkinter import filedialog
 import tkinter as tk
+import asyncio
 import os
 
 class DogAuscController:
@@ -30,9 +31,27 @@ class DogAuscController:
     def onLoadPreset(self):
         pass
 
-    def startAuscultation(self):
-        pass
+    async def startAuscultation(self):
+        self.view.connection_label.config(text="Bluetooth Connection to Model: Pending")
+        self.view.connection_label.config(foreground="yellow")
+        await asyncio.ensure_future(self.model.connect_to_arduino())
+        asyncio.sleep(30)
+        while True:
+            if self.model.connected():
+                self.view.connection_label.config(text="Bluetooth Connection to Model: Connected")
+                self.view.connection_label.config(foreground="green")
+                return
+            else:
+                self.view.connection_label.config(text="Bluetooth Connection to Model: Inactive")
+                self.view.connection_label.config(foreground="red")
+                return
 
-    def endAuscultation(self):
-        pass
+
+
+    async def endAuscultation(self):
+        self.model.disconnect()
+        await asyncio.sleep(2)
+        self.view.connection_label.config(text="Bluetooth Connection to Model: Inactive")
+        self.view.connection_label.config(foreground="red")
+        print("auscultation ended")
 

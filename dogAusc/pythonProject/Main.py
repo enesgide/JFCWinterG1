@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from async_tkinter_loop import async_mainloop
 from DogAuscModel import DogAuscModel
 from DogAuscView import DogAuscView
 from DogAuscController import DogAuscController
@@ -18,4 +18,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.resizable(False, False)
     app = Main(root)
-    root.mainloop()
+    async_mainloop(root)
