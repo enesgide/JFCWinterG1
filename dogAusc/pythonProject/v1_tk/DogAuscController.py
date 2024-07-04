@@ -46,7 +46,6 @@ class DogAuscController:
                 await asyncio.sleep(1)
         else:
             self.view.update_status("Inactive")
-        await self.model.client_disconnect()
 
 
 

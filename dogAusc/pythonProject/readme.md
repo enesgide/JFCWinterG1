@@ -24,3 +24,10 @@
 * idk how fix
 * still need to implement file loading and naming solution
 * exe needs to be signed for security
+
+### 04/07/2024
+* moved v1 code to its own folder
+* start v2 using customtkinter
+* Change load files button to use a popup window and set each sensor audio
+* implement file loading 
+* implement async BLE connection again (dunno how to work with ctk)

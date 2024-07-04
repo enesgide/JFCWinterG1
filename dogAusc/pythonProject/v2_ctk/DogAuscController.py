@@ -4,8 +4,6 @@ import tkinter as tk
 import asyncio
 import os
 
-NOTIFY_CHARACTERISTIC_UUID = "19b10001-e8f2-537e-4f6c-d104768a1216"
-
 class DogAuscController:
     def __init__(self, model, view):
         self.model = model
@@ -30,9 +28,9 @@ class DogAuscController:
     def onLoadPreset(self):
         pass
 
-    async def startAuscultation(self):
+    def startAuscultation(self):
         pass
 
-    async def endAuscultation(self):
+    def endAuscultation(self):
         pass
 
