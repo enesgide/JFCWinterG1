@@ -18,8 +18,8 @@ class Main:
 
 
 if __name__ == "__main__":
-    root = customtkinter.CTk()
+    root = tk.Tk()
     root.resizable(width=False, height=False)
-    root.title("VetSci Dog Auscultation")
+    root.title("Vet Stethoscope")
     app = Main(root)
-    root.mainloop()
+    async_mainloop(root)

@@ -55,15 +55,18 @@ class DogAuscModel:
             async with BleakClient(device.address, timeout=30.0) as client:
                 self.client = client
                 print(f"Connected to {device.name}")
-
                 write_data = "READ".encode()  # Convert string to bytes
                 await client.write_gatt_char(REQUEST_CHARACTERISTIC_UUID, write_data)
                 print(f"Sent data: {write_data}")
 
                 self.is_connected = True
                 return True
+        except asyncio.TimeoutError:
+            print("Connection to device timed out")
+            self.is_connected = False
+            return False
         except Exception as e:
-            print(f"Connection error: {e}")
+            print(f"An error occurred: {e}")
             self.is_connected = False
             return False
         

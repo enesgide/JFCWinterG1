@@ -2,6 +2,7 @@ import tkinter
 import customtkinter
 import os
 from PIL import Image  
+from async_tkinter_loop import async_handler
 
 class DogAuscView:
     def __init__(self, root) -> None:
@@ -86,10 +87,10 @@ class DogAuscView:
         load_btn = customtkinter.CTkButton(side_frame, text='Load files', command=self.controller.onLoadAudio, font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
         load_btn.grid(row=1, column=0, sticky="ew", padx=5, pady=(0,10))
 
-        start_btn = customtkinter.CTkButton(side_frame, text='Start Auscultation', command=self.controller.startAuscultation, font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
+        start_btn = customtkinter.CTkButton(side_frame, text='Start Auscultation', command=async_handler(self.controller.startAuscultation), font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
         start_btn.grid(row=2, column=0, sticky="new", padx=5, pady=5)
 
-        stop_btn = customtkinter.CTkButton(side_frame, text='End Auscultation', command=self.controller.endAuscultation, font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
+        stop_btn = customtkinter.CTkButton(side_frame, text='End Auscultation', command=async_handler(self.controller.endAuscultation), font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
         stop_btn.grid(row=2, column=0, sticky="ew", padx=5, pady=5)
 
     def set_controller(self, controller):
@@ -97,3 +98,14 @@ class DogAuscView:
 
     def get_omni(self):
         return self.omni_frame
+    
+    def update_status(self, state):
+        if state == "Inactive":
+            self.connection_label.configure(text="Connection status: Inactive")
+            #self.connection_label.configure(foreground="red")
+        elif state == "Pending":
+            self.connection_label.configure(text="Connection status: Pending")
+            #self.connection_label.configure(foreground="orange")
+        elif state == "Active":
+            self.connection_label.configure(text="Connection status: Active")
+            #self.connection_label.configure(foreground="green")

@@ -1,7 +1,6 @@
 import os
 from tkinter import filedialog
 
-
 class PopupController:
     def __init__(self, main_window, popup, model) -> None:
         self.main_window = main_window
@@ -19,12 +18,6 @@ class PopupController:
         if file_path:
             # use basename for label in popup, abspath for model attribute so pygame can play it
             return file_path
-        
-    def onLoadPreset(self, choice):
-        self.view.main_label.configure(text= f"Current Active Profile: {choice}")
-        print("combobox dropdown clicked:", choice)
-    
-
 
     def setHeartAudio(self):
         self.heart_choice = self.select_audio()

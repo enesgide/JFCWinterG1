@@ -242,10 +242,10 @@ class DogAuscView:
     def update_status(self, state):
         if state == "Inactive":
             self.connection_label.config(text="Bluetooth Connection to model: Inactive")
-            self.connection_label.config(foreground="red")
+            #self.connection_label.config(foreground="red")
         elif state == "Pending":
             self.connection_label.config(text="Bluetooth Connection to model: Pending")
-            self.connection_label.config(foreground="orange")
+            #self.connection_label.config(foreground="orange")
         elif state == "Active":
             self.connection_label.config(text="Bluetooth Connection to model: Active")
-            self.connection_label.config(foreground="green")
+            #self.connection_label.config(foreground="green")
