@@ -31,3 +31,8 @@
 * Change load files button to use a popup window and set each sensor audio
 * implement file loading 
 * implement async BLE connection again (dunno how to work with ctk)
+
+### 04/07/2024
+* received updated BLE code
+* integrated popup and custom file loading for app and model
+* need to do presets, shouldnt be too hard

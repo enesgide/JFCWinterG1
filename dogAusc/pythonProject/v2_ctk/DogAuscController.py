@@ -1,29 +1,28 @@
 import pygame
-from tkinter import filedialog
 import tkinter as tk
-import asyncio
+from tkinter import filedialog
 import os
+
+from DogAuscPopup import DogAuscPopup
+from PopupController import PopupController
 
 class DogAuscController:
     def __init__(self, model, view):
         self.model = model
-        self.view = view
+        self.view = view 
         pygame.mixer.init()
 
-    def onTestS1(self):
+    def onTestHeart(self):
         pass
 
-    def onTestS2(self):
-        pass
-
-    def onTestS3(self):
-        pass
-
-    def onTestS4(self):
+    def onTestLung(self):
         pass
 
     def onLoadAudio(self):
-        pass
+        popup = DogAuscPopup(self.view)
+        popup_controller = PopupController(self.view, popup, self.model)
+        popup.set_controller(popup_controller)
+        popup.init_popup()
 
     def onLoadPreset(self):
         pass
@@ -33,4 +32,10 @@ class DogAuscController:
 
     def endAuscultation(self):
         pass
+
+    def play_audio(self, file_path):
+        pygame.mixer.music.load(file_path)
+        pygame.mixer.music.play()
+
+    
 
