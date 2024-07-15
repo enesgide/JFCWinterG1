@@ -1,5 +1,4 @@
 import tkinter as tk
-import customtkinter
 from async_tkinter_loop import async_mainloop
 from DogAuscModel import DogAuscModel
 from DogAuscView import DogAuscView

@@ -1,7 +1,5 @@
-import os
 import asyncio
 from bleak import BleakClient, BleakScanner
-import time
 
 ARDUINO_NAME = "DogAus"
 REQUEST_CHARACTERISTIC_UUID = "19b10001-e8f2-537e-4f6c-d104768a1215"
@@ -13,6 +11,9 @@ class DogAuscModel:
         self.s1_audio = None
         self.s2_audio = None
         self.client = None
+
+        self.s1_py = None
+        self.s2_py = None
 
     def set_s1(self, audio):
         self.s1_audio = audio

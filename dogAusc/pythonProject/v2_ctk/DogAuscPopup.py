@@ -1,4 +1,5 @@
 import customtkinter
+from tkinter import messagebox
 
 class DogAuscPopup:
     def __init__(self, app) -> None:
@@ -32,12 +33,13 @@ class DogAuscPopup:
     def init_popup(self):
         self.popup.columnconfigure(0, weight=1)
         self.popup.columnconfigure(1, weight=1)
+        self.popup.columnconfigure(2, weight=1)
 
         self.popup.rowconfigure(0, weight=1)
         self.popup.rowconfigure(1, weight=1)
 
         ins_label = customtkinter.CTkLabel(master=self.popup, text = "Please set your audio:\n(Remember to select both files before confirming!)", font=("Bahnschrift", 16), text_color="#a5243d")
-        ins_label.grid(row=0, column=0, columnspan = 2, pady = 10, sticky='new')
+        ins_label.grid(row=0, column=0, columnspan = 3, pady = 10, sticky='new')
 
         self.heart_label = customtkinter.CTkLabel(master=self.popup, text = "Heart audio file: Not set", font=("Bahnschrift", 16), text_color="#a5243d")
         self.heart_label.grid(row=0, column=0, sticky="ew")
@@ -55,7 +57,7 @@ class DogAuscPopup:
         confirm.grid(row=1, column = 0)
 
         close_button = customtkinter.CTkButton(self.popup, text="Close", command=self.popup.destroy, font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
-        close_button.grid(row=1, column=1)
+        close_button.grid(row=1, column=2)
 
     def destroy(self):
         self.popup.destroy()

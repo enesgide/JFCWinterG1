@@ -1,8 +1,6 @@
 import asyncio
 import pygame
-import tkinter as tk
-from tkinter import filedialog
-import os
+import time
 
 from DogAuscPopup import DogAuscPopup
 from PopupController import PopupController
@@ -15,13 +13,25 @@ class DogAuscController:
         self.view = view 
         pygame.mixer.init()
 
-    # todo: play/pause
+    # todo: play/pause done
     def onTestHeart(self):
-        pass
+        if self.model.get_s1() != None:
+            pygame.mixer.music.load(self.model.get_s1())
+            pygame.mixer.music.play()
+            time.sleep(15)
+            pygame.mixer.music.stop()
+        else:
+            return
 
-    # todo: play/pause
+    # todo: play/pause done
     def onTestLung(self):
-        pass
+        if self.model.get_s2() != None:
+            pygame.mixer.music.load(self.model.get_s2())
+            pygame.mixer.music.play()
+            time.sleep(15)
+            pygame.mixer.music.stop()
+        else:
+            return
 
     def onLoadAudio(self):
         popup = DogAuscPopup(self.view)
@@ -34,6 +44,12 @@ class DogAuscController:
         self.view.main_label.configure(text= f"Current Active Profile: {choice}")
         print("combobox dropdown clicked:", choice)
 
+    def set_volume(channel, pressure):
+        # Map pressure (10-200) to volume (0.0-1.0)
+        volume = max(0.0, min(1.0, (pressure - 50) / 90))
+        channel.set_volume(volume)
+        print(f"Channel volume set to {volume:.2f}")
+
     # todo: pressure sensing, volume control, play audio
     def notification_handler(self, sender, data):
         decoded_data = data.decode()
@@ -45,36 +61,57 @@ class DogAuscController:
         # Get the highest value for each pair
         heart_pressure = max(values[0], values[1])
         lung_pressure = max(values[2], values[3])
+
+        #apex sensors are 0, 1, (100% volume max), 2, 3 (80% volume max)
         print(f"Max Values: Heart: {heart_pressure}, Lung: {lung_pressure}")
 
+        def set_volume(channel, pressure):
+        # Map pressure (10-200) to volume (0.0-1.0)
+            volume = max(0.0, min(1.0, (pressure - 10) / 90))
+            channel.set_volume(volume)
+            print(f"Channel volume set to {volume:.2f}")
+        
+        set_volume(self.model.s1_py, heart_pressure)
+        set_volume(self.model.s2_py, lung_pressure)
+        
+
     async def startAuscultation(self):
-        self.view.update_status("Pending")
+        if self.model.get_s1() == None or self.model.get_s2() == None:
+            await self.view.update_status("NoFile")
+            return
+        
+
+        await self.view.update_status("Pending")
         connected = await self.model.connect_to_arduino()
         if connected:
-            self.view.update_status("Active")
+            await self.view.update_status("Active")
+            self.model.s1_py = pygame.mixer.Sound(self.model.get_s1())
+            self.model.s2_py = pygame.mixer.Sound(self.model.get_s2())
+
+            self.model.s1_py.play(-1)
+            self.model.s2_py.play(-1)
+            
             await self.model.start_notifications(NOTIFY_CHARACTERISTIC_UUID, self.notification_handler)
 
             while True:
                 await asyncio.sleep(1)
         else:
-            self.view.update_status("Inactive")
+            await self.view.update_status("Inactive")
 
     async def endAuscultation(self):
         if self.model.client != None and self.model.client.is_connected:
             try:
+                await asyncio.sleep(2)
                 await self.model.client.stop_notify(NOTIFY_CHARACTERISTIC_UUID)
                 await self.model.client_disconnect()
-                self.view.update_status("Inactive")
+                await self.view.update_status("Inactive")
+                self.model.s1_py.stop()
+                self.model.s2_py.stop()
                 print("auscultation ended")
             except Exception as e:
                 print(f"Disconnection error: {e}")
             finally:
                 self.model.is_connected = False
                 print(self.model.is_connected)
-
-    def play_audio(self, file_path):
-        pygame.mixer.music.load(file_path)
-        pygame.mixer.music.play()
-
     
 
