@@ -63,8 +63,28 @@ class DogAuscController:
     # todo: preset creation, need audio
     def onLoadPreset(self, choice):
         if choice == "Augie":
-            heart_path = self.resource_path(os.path.join("resources", "presets", "augie","AUGIE_HEART.wav"))
-            lung_path = self.resource_path(os.path.join("resources", "presets", "augie","AUGIE_LUNG.wav"))
+            heart_path = self.resource_path(os.path.join("resources", "presets", "augie","AUGIE_HEART_BOOSTED.wav"))
+            lung_path = self.resource_path(os.path.join("resources", "presets", "augie","AUGIE_LUNG_BOOSTED.wav"))
+
+            self.model.set_s1(heart_path)
+            self.model.set_s2(lung_path)
+
+            self.view.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.model.get_s1())}")
+            self.view.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.model.get_s2())}")
+        
+        elif choice == "Grace":
+            heart_path = self.resource_path(os.path.join("resources", "presets", "grace","Grace_9_BOOSTED.wav"))
+            lung_path = self.resource_path(os.path.join("resources", "presets", "grace","Grace_8_BOOSTED.wav"))
+
+            self.model.set_s1(heart_path)
+            self.model.set_s2(lung_path)
+
+            self.view.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.model.get_s1())}")
+            self.view.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.model.get_s2())}")
+        
+        elif choice == "Sully":
+            heart_path = self.resource_path(os.path.join("resources", "presets", "sully","sully_1_BOOSTED.wav"))
+            lung_path = self.resource_path(os.path.join("resources", "presets", "sully","sully_2_BOOSTED.wav"))
 
             self.model.set_s1(heart_path)
             self.model.set_s2(lung_path)
@@ -72,7 +92,7 @@ class DogAuscController:
             self.view.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.model.get_s1())}")
             self.view.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.model.get_s2())}")
 
-            self.view.main_label.configure(text= f"Current Active Profile: {choice}")
+        self.view.main_label.configure(text= f"Current Active Profile: {choice}")
         
 
     def set_volume(channel, pressure):
