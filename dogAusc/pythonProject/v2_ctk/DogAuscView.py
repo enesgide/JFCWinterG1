@@ -56,7 +56,7 @@ class DogAuscView:
                                              fg_color="#B48291", border_width=0, button_color= "#B48291",
                                              dropdown_fg_color="#B48291", dropdown_hover_color="#AB7384",
                                              font=("Bahnschrift", 14), dropdown_font=("Bahnschrift", 14),
-                                             values=["Year 1", "Year 2", "Year 3", "DVM"], state="readonly", command=self.controller.onLoadPreset)
+                                             values=["Augie", "Grace", "Sully"], state="readonly", command=self.controller.onLoadPreset)
         combobox.set("Select your preset here")
         combobox.grid(row=2, column=0, columnspan=2, padx=10, pady=(0,10), sticky="sew")
 
@@ -78,7 +78,7 @@ class DogAuscView:
         side_label = customtkinter.CTkLabel(master=side_frame, text = "Auscultation Model:\nCardi B ", font=("Bahnschrift", 18), text_color="#a5243d")
         side_label.grid(row=0, column=0, sticky="n", padx=10, pady=10)
         
-        img_path = os.path.join(r"C:\Users\allen\Documents\jfc\wslcode\jfc\JFCWinterG1\dogAusc\pythonProject\v2_ctk\resources\cardi_b.jpg")
+        img_path = self.controller.resource_path(os.path.join("resources", "img", "cardi_b.jpg"))
         my_image = customtkinter.CTkImage(light_image=Image.open(img_path),
                                   dark_image=Image.open(img_path),
                                   size=(200, 250))

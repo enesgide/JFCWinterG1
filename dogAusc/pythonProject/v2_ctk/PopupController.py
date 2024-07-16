@@ -21,11 +21,17 @@ class PopupController:
 
     def setHeartAudio(self):
         self.heart_choice = self.select_audio()
-        self.popup.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.heart_choice)}")
+        if self.heart_choice is not None:
+            self.popup.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.heart_choice)}")
+        else:
+            self.popup.heart_label.configure(text="Heart audio file: None")
     
     def setLungAudio(self):
         self.lung_choice = self.select_audio()
-        self.popup.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.lung_choice)}")
+        if self.lung_choice is not None:
+            self.popup.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.lung_choice)}")
+        else:
+            self.popup.lung_label.configure(text="Lung audio file: None")
 
     def confirm(self):
         #only works if you set both audio files

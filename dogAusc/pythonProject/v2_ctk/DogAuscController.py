@@ -1,34 +1,55 @@
 import asyncio
+import sys
 import pygame
 import time
+import os
 
 from DogAuscPopup import DogAuscPopup
 from PopupController import PopupController
 
 NOTIFY_CHARACTERISTIC_UUID = "19b10001-e8f2-537e-4f6c-d104768a1216"
 
+
 class DogAuscController:
     def __init__(self, model, view):
         self.model = model
         self.view = view 
+
+        self.s1_playing = False
+        self.s2_playing = False
+
         pygame.mixer.init()
 
-    # todo: play/pause done
+    def resource_path(self, relative_path):
+        base_path = os.path.abspath(os.path.dirname(__file__))
+        return os.path.join(base_path, relative_path)
+    
     def onTestHeart(self):
         if self.model.get_s1() != None:
-            pygame.mixer.music.load(self.model.get_s1())
-            pygame.mixer.music.play()
-            time.sleep(15)
-            pygame.mixer.music.stop()
+            if self.s1_playing == False:
+                if self.s2_playing == True:
+                    pygame.mixer.music.pause()
+                    self.s2_playing = False
+
+                pygame.mixer.music.load(self.model.get_s1())
+                pygame.mixer.music.play()
+                self.s1_playing = True
+                time.sleep(7)
+                pygame.mixer.music.stop()
         else:
             return
 
-    # todo: play/pause done
     def onTestLung(self):
         if self.model.get_s2() != None:
+            if self.s2_playing == False:
+                if self.s1_playing == True:
+                    pygame.mixer.music.pause()
+                    self.s1_playing = False
+                    
             pygame.mixer.music.load(self.model.get_s2())
             pygame.mixer.music.play()
-            time.sleep(15)
+            self.s2_playing = True
+            time.sleep(7)
             pygame.mixer.music.stop()
         else:
             return
@@ -41,8 +62,18 @@ class DogAuscController:
 
     # todo: preset creation, need audio
     def onLoadPreset(self, choice):
-        self.view.main_label.configure(text= f"Current Active Profile: {choice}")
-        print("combobox dropdown clicked:", choice)
+        if choice == "Augie":
+            heart_path = self.resource_path(os.path.join("resources", "presets", "augie","AUGIE_HEART.wav"))
+            lung_path = self.resource_path(os.path.join("resources", "presets", "augie","AUGIE_LUNG.wav"))
+
+            self.model.set_s1(heart_path)
+            self.model.set_s2(lung_path)
+
+            self.view.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.model.get_s1())}")
+            self.view.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.model.get_s2())}")
+
+            self.view.main_label.configure(text= f"Current Active Profile: {choice}")
+        
 
     def set_volume(channel, pressure):
         # Map pressure (10-200) to volume (0.0-1.0)
