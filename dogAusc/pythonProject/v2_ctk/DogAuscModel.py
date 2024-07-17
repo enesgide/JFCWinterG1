@@ -27,7 +27,6 @@ class DogAuscModel:
     def get_s2(self):
         return self.s2_audio
 
-
     def connected(self):
         return self.is_connected
 
@@ -35,7 +34,6 @@ class DogAuscModel:
         await self.client.disconnect()
         self.is_connected = False
 
-        
     async def connect_to_arduino(self):
         device = None
         print("Scanning for devices...")
