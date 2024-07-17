@@ -1,14 +1,35 @@
 import os
 from tkinter import filedialog
 
+# Controller class for the Popup view, which updates the popup, main window, and model classes based on user actions
 class PopupController:
-    def __init__(self, main_window, popup, model) -> None:
+
+    # __init__(self, main_window, popup, model)
+    # initialises the popup controller, setting the main window/popup view, and model as class attributes, as well as creating attributes for the apex/non-apex audio file paths
+
+    # params:
+    # self = the class instance
+    # main_window = instance of the DogAuscView class
+    # popup = instance of the DogAuscPopup class
+    # model = instance of the DogAuscModel class
+
+    # returns: None
+
+    def __init__(self, main_window, popup, model):
         self.main_window = main_window
         self.popup = popup
         self.model = model
 
-        self.heart_choice = None
-        self.lung_choice = None
+        self.apex_choice = None
+        self.non_apex_choice = None
+    
+    # select_audio(self)
+    # opens a filedialog that returns the path to an audio file selected
+
+    # params:
+    # self = the class instance
+
+    # returns: file_path, the path to an audio file as a String
 
     def select_audio(self):
         file_path = filedialog.askopenfilename(
@@ -18,28 +39,53 @@ class PopupController:
         if file_path:
             # use basename for label in popup, abspath for model attribute so pygame can play it
             return file_path
+        
+    # setApexAudio(self)
+    # sets the file path choice for the apex audio to the class attribute, as well as reflecting the selection on the popup view
 
-    def setHeartAudio(self):
-        self.heart_choice = self.select_audio()
-        if self.heart_choice is not None:
-            self.popup.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.heart_choice)}")
+    # params:
+    # self = the class instance
+
+    # returns: None
+
+    def setApexAudio(self):
+        self.apex_choice = self.select_audio()
+        if self.apex_choice is not None:
+            self.popup.apex_label.configure(text=f"Apex audio file: {os.path.basename(self.apex_choice)}")
         else:
-            self.popup.heart_label.configure(text="Heart audio file: None")
+            self.popup.apex_label.configure(text="Apex audio file: None")
+
+    # setNonApexAudio(self)
+    # sets the file path choice for the non apex audio to the class attribute, as well as reflecting the selection on the popup view
+
+    # params:
+    # self = the class instance
+
+    # returns: None
     
-    def setLungAudio(self):
-        self.lung_choice = self.select_audio()
-        if self.lung_choice is not None:
-            self.popup.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.lung_choice)}")
+    def setNonApexAudio(self):
+        self.non_apex_choice = self.select_audio()
+        if self.non_apex_choice is not None:
+            self.popup.non_apex_label.configure(text=f"Non apex audio file: {os.path.basename(self.non_apex_choice)}")
         else:
-            self.popup.lung_label.configure(text="Lung audio file: None")
+            self.popup.non_apex_label.configure(text="Non apex audio file: None")
 
+    # confirm(self)
+    # confirms the choices by setting the the model's s1 and s2 attributes to the apex and non apex choices, as well as updating the main window view's audio file labels to the choices.
+
+    # params:
+    # self = the class instance
+
+    # returns: None
+    
     def confirm(self):
         #only works if you set both audio files
-        if self.heart_choice != None or self.lung_choice != None:
-            self.model.set_s1(os.path.abspath(self.heart_choice))
-            self.model.set_s2(os.path.abspath(self.lung_choice))
+        if self.apex_choice != None or self.non_apex_choice != None:
+            self.model.set_s1(os.path.abspath(self.apex_choice))
+            self.model.set_s2(os.path.abspath(self.non_apex_choice))
 
-            self.main_window.heart_label.configure(text=f"Heart audio file: {os.path.basename(self.heart_choice)}")
-            self.main_window.lung_label.configure(text=f"Lung audio file: {os.path.basename(self.lung_choice)}")
-            self.main_window.main_label.configure(text=f"Current active profile: Custom")
+            self.main_window.apex_label.configure(text=f"Heart audio file: {os.path.basename(self.apex_choice)}")
+            self.main_window.non_apex_label.configure(text=f"Lung audio file: {os.path.basename(self.non_apex_choice)}")
             self.popup.destroy()
+        else:
+            return
