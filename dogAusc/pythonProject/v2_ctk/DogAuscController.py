@@ -51,7 +51,7 @@ class DogAuscController:
     def onTestApex(self):
         if self.model.get_s1() != None:
             if self.model.s1_playing == False:
-                if self.s2_playing == True:
+                if self.model.s2_playing == True:
                     pygame.mixer.music.pause()
                     self.model.s2_playing = False
 
@@ -80,7 +80,7 @@ class DogAuscController:
                     
             pygame.mixer.music.load(self.model.get_s2())
             pygame.mixer.music.play()
-            self.s2_playing = True
+            self.model.s2_playing = True
             time.sleep(7)
             pygame.mixer.music.stop()
         else:
@@ -131,7 +131,6 @@ class DogAuscController:
         heart_pressure = max(values[0], values[1])
         lung_pressure = max(values[2], values[3])
 
-        #apex sensors are 0, 1, (100% volume max), 2, 3 (80% volume max)
         print(f"Max Values: Heart: {heart_pressure}, Lung: {lung_pressure}")
 
         # set_volume(channel, pressure)

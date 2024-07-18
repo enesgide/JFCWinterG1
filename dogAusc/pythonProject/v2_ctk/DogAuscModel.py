@@ -125,7 +125,7 @@ class DogAuscModel:
 
         print(f"Connecting to {device.name} at {device.address}...")
 
-        #establis connection with module using BleakClient
+        #establish connection with module using BleakClient
         try:
             async with BleakClient(device.address, timeout=30.0) as client:
                 self.client = client
@@ -155,6 +155,7 @@ class DogAuscModel:
     # returns: None
 
     async def start_notifications(self, char_uuid, callback):
+        # Establish connection to start notification
         await self.client.connect()
         while self.is_connected:
             # Read from the characteristic

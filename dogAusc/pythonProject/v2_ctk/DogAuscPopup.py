@@ -1,4 +1,5 @@
 import customtkinter
+from tkinter import Toplevel
 
 # class that represents the View for the Popup window, which handles file loading UI
 class DogAuscPopup:
@@ -13,7 +14,7 @@ class DogAuscPopup:
     # returns: None
 
     def __init__(self, app) -> None:
-        self.popup = customtkinter.CTkToplevel(fg_color="#B9CFD4")
+        self.popup = Toplevel()
         self.popup.title("Select Files")
         self.popup.geometry("800x400")
         self.controller = None
@@ -27,14 +28,12 @@ class DogAuscPopup:
 
         self.popup.geometry(f'+{win_x}+{win_y}')
 
-        # bring popup to front
-        self.popup.lift()
-
-        # set focus to popup
-        self.popup.focus_set()
-
-        # ensure user is unable to interact with main window
+        # Make the popup transient and modal
         self.popup.grab_set()
+    
+        # Ensure the popup gets focus
+        self.popup.focus_set()
+        self.popup.attributes("-topmost", True)
 
     # set_controller(self, controller)
     # method used to set the controller on view initialisation
