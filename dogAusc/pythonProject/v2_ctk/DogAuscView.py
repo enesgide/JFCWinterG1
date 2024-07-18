@@ -23,7 +23,7 @@ class DogAuscView:
         self.root = root
         self.controller = None
         self.root.geometry('800x600')
-        self.omni_frame = customtkinter.CTkFrame(master=self.root, width=800, height=600, corner_radius=10, fg_color="#CEE0DC")
+        self.omni_frame = customtkinter.CTkFrame(master=self.root, width=800, height=600, corner_radius=10)
         self.omni_frame.pack(fill="both", expand=True)
 
         self.main_label = None
@@ -40,9 +40,10 @@ class DogAuscView:
     # returns: None
 
     def init_main_frame(self):
-        main_frame = customtkinter.CTkFrame(master=self.omni_frame, width=600, height=550, fg_color="#B9CFD4")
+        main_frame = customtkinter.CTkFrame(master=self.omni_frame, width=600, height=550)
         main_frame.pack(side="right", fill="both", expand=True, padx=(5,10), pady=10)
 
+        # configures the frame area into weighted rows and columns as a grid where other components can be placed
         main_frame.columnconfigure(0, weight = 1)
         main_frame.columnconfigure(1, weight = 1)
         main_frame.rowconfigure(0, weight=0)
@@ -50,29 +51,29 @@ class DogAuscView:
         main_frame.rowconfigure(2, weight=1)
         main_frame.rowconfigure(3, weight=1)
 
-        self.apex_label = customtkinter.CTkLabel(master=main_frame, text = "Apex audio file: Not set", font=("Bahnschrift", 16), text_color="#a5243d")
+        self.apex_label = customtkinter.CTkLabel(master=main_frame, text = "Apex audio file: Not set", font=("Bahnschrift", 16))
         self.apex_label.grid(row=1, column=0, sticky="ew")
 
         apex_button = customtkinter.CTkButton(master=main_frame, text='Test apex audio', 
-                                               command=self.controller.onTestApex, font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
+                                               command=self.controller.onTestApex, font=("Bahnschrift", 14))
         apex_button.grid(row=1, column=1, padx=2, pady=2)
 
-        self.non_apex_label = customtkinter.CTkLabel(master=main_frame, text = "Non apex audio file: Not set", font=("Bahnschrift", 16), text_color="#a5243d")
+        self.non_apex_label = customtkinter.CTkLabel(master=main_frame, text = "Non apex audio file: Not set", font=("Bahnschrift", 16))
         self.non_apex_label.grid(row=2, column=0, sticky="new")
 
         non_apex_button = customtkinter.CTkButton(master=main_frame, text='Test non apex audio', 
-                                              command=self.controller.onTestNonApex, font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
+                                              command=self.controller.onTestNonApex, font=("Bahnschrift", 14))
         non_apex_button.grid(row=2, column=1, padx=2, pady=2, sticky='n')
 
         start_btn = customtkinter.CTkButton(main_frame, text='Start Auscultation', 
-                                            command=async_handler(self.controller.startAuscultation), font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
+                                            command=async_handler(self.controller.startAuscultation), font=("Bahnschrift", 14))
         start_btn.grid(row=3, column=0, columnspan=2, sticky="new", padx=5)
 
         stop_btn = customtkinter.CTkButton(main_frame, text='End Auscultation', 
-                                           command=async_handler(self.controller.endAuscultation), font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
+                                           command=async_handler(self.controller.endAuscultation), font=("Bahnschrift", 14))
         stop_btn.grid(row=3, column=0, columnspan=2, sticky="ew", padx=5)
 
-        self.connection_label = customtkinter.CTkLabel(master=main_frame, text = "Connection Status: Inactive", font=("Bahnschrift", 20), text_color="red")
+        self.connection_label = customtkinter.CTkLabel(master=main_frame, text = "Connection Status: Inactive", font=("Bahnschrift", 20), text_color = 'red')
         self.connection_label.grid(row=3, column=0, columnspan=2, padx=0, pady=10, sticky='s')
 
 
@@ -85,14 +86,15 @@ class DogAuscView:
     # returns: None
 
     def init_side_frame(self):
-        side_frame = customtkinter.CTkFrame(master=self.omni_frame, width=200, height=550, corner_radius=10, fg_color="#B9CFD4")
+        side_frame = customtkinter.CTkFrame(master=self.omni_frame, width=200, height=550, corner_radius=10)
         side_frame.pack(side="left", fill="both", expand=True, padx=(10,5), pady=10)
 
+        # configures the frame area into weighted rows and columns as a grid where other components can be placed
         side_frame.columnconfigure(0, weight=1)
         side_frame.rowconfigure(0, weight=1)
         side_frame.rowconfigure(1, weight=1)
 
-        side_label = customtkinter.CTkLabel(master=side_frame, text = "Auscultation Model:\nCardi B ", font=("Bahnschrift", 18), text_color="#a5243d")
+        side_label = customtkinter.CTkLabel(master=side_frame, text = "Auscultation Model:\nCardi B ", font=("Bahnschrift", 18))
         side_label.grid(row=0, column=0, sticky="n", padx=10, pady=10)
         
         img_path = self.controller.resource_path(os.path.join("resources", "img", "cardi_b.jpg"))
@@ -104,7 +106,7 @@ class DogAuscView:
         image_label.grid(row=0, column=0, sticky="s")
 
         load_btn = customtkinter.CTkButton(side_frame, text='Load files', 
-                                           command=self.controller.onLoadAudio, font=("Bahnschrift", 14), fg_color="#B48291", hover_color="#AB7384")
+                                           command=self.controller.onLoadAudio, font=("Bahnschrift", 14))
         load_btn.grid(row=1, column=0, columnspan=2, sticky="ew", padx=5, pady=(0,10))
 
     # set_controller(self, controller)
@@ -142,14 +144,15 @@ class DogAuscView:
     async def update_status(self, state):
         if state == "Inactive":
             self.connection_label.configure(text="Connection status: Inactive")
-            #self.connection_label.configure(foreground="red")
+            self.connection_label.configure(text_color="red")
         elif state == "Pending":
             self.connection_label.configure(text="Connection status: Pending")
-            #self.connection_label.configure(foreground="orange")
+            self.connection_label.configure(text_color="orange")
         elif state == "Active":
             self.connection_label.configure(text="Connection status: Active")
-            #self.connection_label.configure(foreground="green")
+            self.connection_label.configure(text_color="green")
         elif state == "NoFile":
-            self.connection_label.configure(text="Please apply a preset or load audio files first!")
+            self.connection_label.configure(text="Please load audio files first!")
             await asyncio.sleep(5)
             self.connection_label.configure(text="Connection status: Inactive")
+            self.connection_label.configure(text_color="red")
