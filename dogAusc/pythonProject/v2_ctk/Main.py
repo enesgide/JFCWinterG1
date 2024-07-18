@@ -1,4 +1,5 @@
 import tkinter as tk
+import customtkinter
 from async_tkinter_loop import async_mainloop
 from DogAuscModel import DogAuscModel
 from DogAuscView import DogAuscView
@@ -27,6 +28,7 @@ class Main:
 # entry point, will be run if the script Main.py is run.
 # sets up the root Tk window, initialises the Main instance, and runs the application's main loop using async_tkinter_loop's async_mainloop methodS
 if __name__ == "__main__":
+    customtkinter.set_appearance_mode("dark")
     root = tk.Tk()
     root.resizable(width=False, height=False)
     root.title("Vet Stethoscope")
