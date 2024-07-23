@@ -32,7 +32,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.resizable(width=False, height=False)
     root.title("Vet Stethoscope")
-    root.wm_attributes("-alpha", 1)
-    root.attributes('-transparentcolor', 'SystemButtonFace')
     app = Main(root)
     async_mainloop(root)
