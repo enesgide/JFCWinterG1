@@ -2,7 +2,7 @@ import asyncio
 from bleak import BleakClient, BleakScanner
 
 # Variables that represent the specific details for the model's Arduino
-ARDUINO_NAME = "Arduino"
+ARDUINO_NAME = "DogAus"
 REQUEST_CHARACTERISTIC_UUID = "19b10001-e8f2-537e-4f6c-d104768a1215"
 NOTIFY_CHARACTERISTIC_UUID = "19b10001-e8f2-537e-4f6c-d104768a1216"
 
