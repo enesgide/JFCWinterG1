@@ -69,13 +69,13 @@ class DogAuscPopup:
         ins_label = customtkinter.CTkLabel(master=self.popup, text = "Please set your audio:\n(Remember to select both files before confirming!)", font=("Bahnschrift", 16))
         ins_label.grid(row=0, column=0, columnspan = 3, pady = 10, sticky='new')
 
-        self.apex_label = customtkinter.CTkLabel(master=self.popup, text = "Apex audio file: Not set", font=("Bahnschrift", 16))
+        self.apex_label = customtkinter.CTkLabel(master=self.popup, text = "Heart audio file: Not set", font=("Bahnschrift", 16))
         self.apex_label.grid(row=0, column=0, sticky="ew")
 
         apex_button = customtkinter.CTkButton(master=self.popup, text='Select file', command=self.controller.setApexAudio, font=("Bahnschrift", 14))
         apex_button.grid(row=0, column=1, padx=2, pady=2)
 
-        self.non_apex_label = customtkinter.CTkLabel(master=self.popup, text = "Non apex audio file: Not set", font=("Bahnschrift", 16))
+        self.non_apex_label = customtkinter.CTkLabel(master=self.popup, text = "Lung audio file: Not set", font=("Bahnschrift", 16))
         self.non_apex_label.grid(row=0, column=0, sticky="sew")
 
         non_apex_button = customtkinter.CTkButton(master=self.popup, text='Select file', command=self.controller.setNonApexAudio, font=("Bahnschrift", 14))

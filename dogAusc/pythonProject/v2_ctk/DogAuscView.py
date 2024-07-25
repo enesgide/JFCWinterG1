@@ -51,17 +51,17 @@ class DogAuscView:
         main_frame.rowconfigure(2, weight=1)
         main_frame.rowconfigure(3, weight=1)
 
-        self.apex_label = customtkinter.CTkLabel(master=main_frame, text = "Apex audio file: Not set", font=("Bahnschrift", 16))
+        self.apex_label = customtkinter.CTkLabel(master=main_frame, text = "Heart audio file: Not set", font=("Bahnschrift", 16))
         self.apex_label.grid(row=1, column=0, sticky="ew")
 
-        apex_button = customtkinter.CTkButton(master=main_frame, text='Test apex audio', 
+        apex_button = customtkinter.CTkButton(master=main_frame, text='Test heart audio', 
                                                command=self.controller.onTestApex, font=("Bahnschrift", 14))
         apex_button.grid(row=1, column=1, padx=2, pady=2)
 
-        self.non_apex_label = customtkinter.CTkLabel(master=main_frame, text = "Non apex audio file: Not set", font=("Bahnschrift", 16))
+        self.non_apex_label = customtkinter.CTkLabel(master=main_frame, text = "Lung audio file: Not set", font=("Bahnschrift", 16))
         self.non_apex_label.grid(row=2, column=0, sticky="new")
 
-        non_apex_button = customtkinter.CTkButton(master=main_frame, text='Test non apex audio', 
+        non_apex_button = customtkinter.CTkButton(master=main_frame, text='Test lung audio', 
                                               command=self.controller.onTestNonApex, font=("Bahnschrift", 14))
         non_apex_button.grid(row=2, column=1, padx=2, pady=2, sticky='n')
 
