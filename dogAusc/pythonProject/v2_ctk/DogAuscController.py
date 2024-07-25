@@ -144,7 +144,7 @@ class DogAuscController:
 
         def set_volume(channel, pressure):
         # Map pressure (10-100) to volume (0.0-1.0)
-            volume = max(0.0, min(1.0, (pressure - 10) / 90))
+            volume = max(0.1, min(1.0, (pressure - 40) / 60))
             channel.set_volume(volume)
             print(f"Channel volume set to {volume:.2f}")
         
